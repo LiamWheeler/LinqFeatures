@@ -21,15 +21,14 @@ namespace LinqFeatures
                 new Employee {Id = 3, Name = "Dec"}
             };
 
-            foreach (var employee in developers.Where(NameStartsWithL))
+            foreach (var employee in developers.Where(
+                delegate(Employee employee)
+                {
+                     return employee.Name.StartsWith("L");
+                }))
             {
                 Console.WriteLine(employee.Name);
             }
-        }
-
-        private static bool NameStartsWithL(Employee employee)
-        {
-            return employee.Name.StartsWith("L");
         }
     }
 }
