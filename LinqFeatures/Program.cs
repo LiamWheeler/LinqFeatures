@@ -28,13 +28,22 @@ namespace LinqFeatures
                 new Employee {Id = 3, Name = "Dec"}
             };
 
-            var query = developers.Where(e => e.Name.Length >= 3)
-                                  .OrderBy(e => e.Name);
+            var quers = developers.Where(e => e.Name.Length > 3)
+                                  .OrderByDescending(e => e.Name)
+                                  .Select(e => e);
 
-            foreach (var employee in query)
+            var query2 =
+                from developer in developers
+                where developer.Name.Length > 3
+                orderby developer.Name descending
+                select developer;
+
+            foreach (var employee in query2)
             {
-                Console.WriteLine(employee.Name);
+            Console.WriteLine(employee.Name);
             }
+
+            
         }
 
     }
