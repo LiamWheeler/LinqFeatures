@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinqFeatures
+namespace LinqFeatures.MyLinq
 {
     public static class MyLinq
     {

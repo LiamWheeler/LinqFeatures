@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.Linq;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using LinqFeatures.MyLinq;
 
 namespace LinqFeatures
 {
@@ -20,13 +21,15 @@ namespace LinqFeatures
                 new Employee {Id = 3, Name = "Dec"}
             };
 
-            Console.WriteLine(developers.Count());
-            IEnumerator<Employee> enumerator = developers.GetEnumerator();
-            while (enumerator.MoveNext())
+            foreach (var employee in developers.Where(NameStartsWithL))
             {
-                Console.WriteLine(enumerator.Current.Name);
+                Console.WriteLine(employee.Name);
             }
+        }
 
+        private static bool NameStartsWithL(Employee employee)
+        {
+            return employee.Name.StartsWith("L");
         }
     }
 }
