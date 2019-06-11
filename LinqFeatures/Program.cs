@@ -21,11 +21,7 @@ namespace LinqFeatures
                 new Employee {Id = 3, Name = "Dec"}
             };
 
-            foreach (var employee in developers.Where(
-                delegate(Employee employee)
-                {
-                     return employee.Name.StartsWith("L");
-                }))
+            foreach (var employee in developers.Where(e => e.Name.StartsWith("L")))
             {
                 Console.WriteLine(employee.Name);
             }
