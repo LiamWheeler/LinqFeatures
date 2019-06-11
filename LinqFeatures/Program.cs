@@ -11,6 +11,12 @@ namespace LinqFeatures
     {
         static void Main(string[] args)
         {
+
+            Func<int, int> square = x => x*x;
+            Func<int, int, int> add = (x, y) => x + y;
+            Console.WriteLine(square(add(3, 5)));
+
+
             IEnumerable<Employee> developers = new Employee[]
             {
                 new Employee {Id = 1, Name = "Liam"},
@@ -26,5 +32,6 @@ namespace LinqFeatures
                 Console.WriteLine(employee.Name);
             }
         }
+
     }
 }
