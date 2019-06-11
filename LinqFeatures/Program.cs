@@ -20,7 +20,8 @@ namespace LinqFeatures
                 new Employee {Id = 3, Name = "Dec"}
             };
 
-            IEnumerator<Employee> enumerator = sales.GetEnumerator();
+            Console.WriteLine(developers.Count());
+            IEnumerator<Employee> enumerator = developers.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 Console.WriteLine(enumerator.Current.Name);
