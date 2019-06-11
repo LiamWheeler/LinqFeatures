@@ -28,7 +28,8 @@ namespace LinqFeatures
                 new Employee {Id = 3, Name = "Dec"}
             };
 
-            foreach (var employee in developers.Where(e => e.Name.StartsWith("L")))
+            foreach (var employee in developers.Where(e => e.Name.Length >= 3)
+                                               .OrderBy(e => e.Name))
             {
                 Console.WriteLine(employee.Name);
             }
