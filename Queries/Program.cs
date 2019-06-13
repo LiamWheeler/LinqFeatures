@@ -17,12 +17,13 @@ namespace Queries
                 new Movie {Title = "Casablanca", Rating = 8.5f, Year = 1942},
                 new Movie {Title = "Star Wars V", Rating = 8.7f, Year = 1980}
             };
-            var query = movies.Filter(m => m.Year > 2000);
+            var query = movies.Filter(m => m.Year > 2000)
+                               .Take(1);
 
-            foreach (var movie in query)
+            var enumerator = query.GetEnumerator();
+            while (enumerator.MoveNext())
             {
-                Console.WriteLine(movie.Title);
-
+                Console.WriteLine(enumerator.Current.Title);
             }
         }
     }
