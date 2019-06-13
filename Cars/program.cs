@@ -13,7 +13,8 @@ namespace Cars
         {
             var cars = ProcessFile("fuel.csv");
 
-            var query = cars.OrderByDescending(c => c.Combined);
+            var query = cars.OrderByDescending(c => c.Combined)
+                            .ThenBy(c => c.Name);
 
             foreach (var car in query.Take(10))
             {
