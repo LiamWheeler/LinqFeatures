@@ -14,16 +14,21 @@ namespace Cars
             var cars = ProcessFile("fuel.csv");
 
             var query = from car in cars
-                        where car.Manufactorer == "BMW" && car.Year == 2016
-                        orderby car.Combined descending , car.Name ascending
-                        select car;
+                        where car.Manufacturer == "BMW" && car.Year == 2016
+                        orderby car.Combined descending, car.Name ascending
+                        select new
+                        {
+                            car.Manufacturer,
+                            car.Name,
+                            car.Combined
+                        };
 
-            var result = cars.Any(c => c.Manufactorer == "Ford");
+            var result = cars.Any(c => c.Manufacturer == "Ford");
             Console.WriteLine(result);
 
             foreach (var car in query.Take(10))
             {
-                Console.WriteLine($"{car.Manufactorer} {car.Name} : {car.Combined}");
+                Console.WriteLine($"{car.Manufacturer} {car.Name} : {car.Combined}");
             }
         }
 
@@ -33,7 +38,7 @@ namespace Cars
                 File.ReadAllLines(path)
                 .Skip(1)  //skips the first line with the column headers
                 .Where(l => l.Length > 1) //ignores any blank lines, the last line in this case
-                .Select(l => Car.ParseFromCsv(l));
+                .ToCar();
 
 
                 return query.ToList();
