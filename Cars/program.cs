@@ -13,9 +13,16 @@ namespace Cars
         {
             var cars = ProcessFile("fuel.csv");
 
-            var query = cars.Where(c => c.Manufactorer == "BMW" && c.Year == 2016 )
+            var query = from car in cars
+                        where car.Manufactorer == "BMW" && car.Year == 2016
+                        orderby car.Combined descending , car.Name ascending
+                        select car;
+
+            var top = cars.Where(c => c.Manufactorer == "BMW" && c.Year == 2016)
                             .OrderByDescending(c => c.Combined)
-                            .ThenBy(c => c.Name);
+                            .ThenBy(c => c.Name)
+                            .FirstOrDefault();
+            Console.WriteLine(top.Name);
 
             foreach (var car in query.Take(10))
             {
