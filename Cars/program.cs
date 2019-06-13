@@ -18,11 +18,8 @@ namespace Cars
                         orderby car.Combined descending , car.Name ascending
                         select car;
 
-            var top = cars.Where(c => c.Manufactorer == "BMW" && c.Year == 2016)
-                            .OrderByDescending(c => c.Combined)
-                            .ThenBy(c => c.Name)
-                            .FirstOrDefault();
-            Console.WriteLine(top.Name);
+            var result = cars.Any(c => c.Manufactorer == "Ford");
+            Console.WriteLine(result);
 
             foreach (var car in query.Take(10))
             {
