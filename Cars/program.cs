@@ -19,7 +19,7 @@ namespace Cars
 
             foreach (var car in query.Take(10))
             {
-                Console.WriteLine($"{car.Name} : {car.Combined}");
+                Console.WriteLine($"{car.Manufactorer} {car.Name} : {car.Combined}");
             }
         }
 
