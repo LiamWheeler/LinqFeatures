@@ -15,7 +15,7 @@ namespace Cars
 
             var query = cars.OrderByDescending(c => c.Combined);
 
-            foreach (var car in query)
+            foreach (var car in query.Take(10))
             {
                 Console.WriteLine($"{car.Name} : {car.Combined}");
             }
