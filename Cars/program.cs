@@ -29,12 +29,14 @@ namespace Cars
 
         private static List<Car> ProcessFile(string path)
         {
-            return
-            File.ReadAllLines(path)
+            var query =
+                File.ReadAllLines(path)
                 .Skip(1)  //skips the first line with the column headers
-                .Where(line => line.Length > 1) //ignores any blank lines, the last line in this case
-                .Select(Car.ParseFromCsv)
-                .ToList();
+                .Where(l => l.Length > 1) //ignores any blank lines, the last line in this case
+                .Select(l => Car.ParseFromCsv(l));
+
+
+                return query.ToList();
         }
     }
 }
