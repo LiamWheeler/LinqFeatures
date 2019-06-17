@@ -28,17 +28,17 @@ namespace Cars
             var query = from manufacturer in manufacturers
                         join car in cars on manufacturer.Name equals car.Manufacturer
                         into carGroup
-                        orderby manufacturer.Name.ToUpper()
                         select new
                         {
                             Manufacturer = manufacturer,
                             Cars = carGroup
-                        };
+                        } into result
+                        group result by result.Manufacturer.Headquarters;
 
             foreach (var group in query)
             {
-                Console.WriteLine($"{group.Manufacturer.Name} : {group.Manufacturer.Headquarters}");
-                foreach (var car in group.Cars.OrderByDescending(c => c.Combined).Take(2))
+                Console.WriteLine($"{group.Key}");
+                foreach (var car in group.SelectMany(g => g.Cars).OrderByDescending(c => c.Combined).Take(3))
                 {
                     Console.WriteLine($"\t{car.Name} has efficiency {car.Combined}");
                 }
