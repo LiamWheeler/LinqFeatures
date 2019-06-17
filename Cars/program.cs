@@ -25,23 +25,22 @@ namespace Cars
             //                car.Combined
             //            };
 
-            var query = from manufacturer in manufacturers
-                        join car in cars on manufacturer.Name equals car.Manufacturer
-                        into carGroup
+            var query = from car in cars
+                        group car by car.Manufacturer into carGroup
                         select new
                         {
-                            Manufacturer = manufacturer,
-                            Cars = carGroup
+                            Name = carGroup.Key,
+                            MaxEfficiency = carGroup.Max(c => c.Combined),
+                            MinEfficiency = carGroup.Min(c => c.Combined),
+                            AvgEfficiency = carGroup.Average(c => c.Combined)
                         } into result
-                        group result by result.Manufacturer.Headquarters;
+                        orderby result.MaxEfficiency descending
+                        select result;
 
-            foreach (var group in query)
+            foreach (var carGroup in query)
             {
-                Console.WriteLine($"{group.Key}");
-                foreach (var car in group.SelectMany(g => g.Cars).OrderByDescending(c => c.Combined).Take(3))
-                {
-                    Console.WriteLine($"\t{car.Name} has efficiency {car.Combined}");
-                }
+                Console.WriteLine($"{carGroup.Name} car efficiency:");
+                Console.WriteLine($"\t Max: {carGroup.MaxEfficiency}, \r\n\t Min: {carGroup.MinEfficiency}, \r\n\t Average: {carGroup.AvgEfficiency:N2} \r\n" );
             }
 
 
