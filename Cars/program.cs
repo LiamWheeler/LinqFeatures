@@ -14,24 +14,36 @@ namespace Cars
             var cars = ProcessCars("fuel.csv");
             var manufacturers = PreocessManufacturers("manufacturers.csv");
 
+            //var query = from car in cars
+            //            join manufacturer in manufacturers 
+            //            on car.Manufacturer equals manufacturer.Name
+            //            orderby car.Combined descending, car.Name ascending
+            //            select new
+            //            {
+            //                manufacturer.Headquarters,
+            //                car.Name,
+            //                car.Combined
+            //            };
+
             var query = from car in cars
-                        join manufacturer in manufacturers 
-                        on car.Manufacturer equals manufacturer.Name
-                        orderby car.Combined descending, car.Name ascending
-                        select new
-                        {
-                            manufacturer.Headquarters,
-                            car.Name,
-                            car.Combined
-                        };
+                        group car by car.Manufacturer.ToUpper() into manufacturer
+                        orderby manufacturer.Key
+                        select manufacturer;
 
-            var result = cars.Any(c => c.Manufacturer == "Ford");
-            Console.WriteLine(result);
-
-            foreach (var car in query.Take(10))
+            foreach (var group in query)
             {
-                Console.WriteLine($"{car.Headquarters} {car.Name} : {car.Combined}");
+                Console.WriteLine(group.Key);
+                foreach (var car in group.OrderByDescending(c => c.Combined).Take(2))
+                {
+                    Console.WriteLine($"\t{car.Name} has efficiency {car.Combined}");
+                }
             }
+
+
+            //foreach (var car in query.Take(10))
+            //{
+            //    Console.WriteLine($"{car.Headquarters} {car.Name} : {car.Combined}");
+            //} 
         }
 
         private static List<Manufacturer> PreocessManufacturers(string path)
