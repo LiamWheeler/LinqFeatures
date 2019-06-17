@@ -25,15 +25,20 @@ namespace Cars
             //                car.Combined
             //            };
 
-            var query = from car in cars
-                        group car by car.Manufacturer.ToUpper() into manufacturer
-                        orderby manufacturer.Key
-                        select manufacturer;
+            var query = from manufacturer in manufacturers
+                        join car in cars on manufacturer.Name equals car.Manufacturer
+                        into carGroup
+                        orderby manufacturer.Name.ToUpper()
+                        select new
+                        {
+                            Manufacturer = manufacturer,
+                            Cars = carGroup
+                        };
 
             foreach (var group in query)
             {
-                Console.WriteLine(group.Key);
-                foreach (var car in group.OrderByDescending(c => c.Combined).Take(2))
+                Console.WriteLine($"{group.Manufacturer.Name} : {group.Manufacturer.Headquarters}");
+                foreach (var car in group.Cars.OrderByDescending(c => c.Combined).Take(2))
                 {
                     Console.WriteLine($"\t{car.Name} has efficiency {car.Combined}");
                 }
