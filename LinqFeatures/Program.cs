@@ -28,7 +28,7 @@ namespace LinqFeatures
                 new Employee {Id = 3, Name = "Dec"}
             };
 
-            var quers = developers.Where(e => e.Name.Length > 3)
+            var query = developers.Where(e => e.Name == "Liam")
                                   .OrderByDescending(e => e.Name)
                                   .Select(e => e);
 
@@ -38,9 +38,9 @@ namespace LinqFeatures
                 orderby developer.Name descending
                 select developer;
 
-            foreach (var employee in query2)
+            foreach (var employee in query)
             {
-            Console.WriteLine(employee.Name);
+            Console.WriteLine(employee.Id);
             }
 
             
